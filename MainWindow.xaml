@@ -1,0 +1,48 @@
+﻿<!-- Deklaracija glavnog prozora za igru Peg Solitaire -->
+<Window x:Class="PegSolitaire.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Peg Solitaire" Height="350" Width="300">
+
+    <!-- Osnovna mreža (layout) za organizaciju sadržaja -->
+    <Grid>
+
+        <!-- Vertikalni StackPanel za organizaciju sadržaja -->
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+
+            <!-- Oznaka (Label) za prikaz proteklog vremena igre -->
+            <Label x:Name="timeLabel" Content="00:00:00" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10" FontSize="16" FontWeight="Bold"/>
+
+            <!-- Kontrola ploče za igru -->
+            <ItemsControl x:Name="BoardItemsControl" ItemsSource="{Binding Cells}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <!-- Definiranje 7x7 mreže za izgled ploče za igru -->
+                        <UniformGrid Rows="7" Columns="7"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <!-- Predložak podataka za svaku ćeliju -->
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Oblik elipse predstavlja svaki peg; njegova boja mijenja se prema stanju igre -->
+                        <Ellipse x:Name="PegEllipse" Fill="{Binding Color}" Width="30" Height="30" Margin="5" MouseDown="Ellipse_MouseDown">
+                            <Ellipse.RenderTransform>
+                                <TranslateTransform X="{Binding TranslateX}" Y="{Binding TranslateY}"/>
+                            </Ellipse.RenderTransform>
+                        </Ellipse>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- Horizontalni StackPanel za tipke pauze i nastavka -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                <Button x:Name="pauseButton" Content="Pause" Click="PauseButton_Click" Margin="5"/>
+                <Button x:Name="continueButton" Content="Continue" Click="ContinueButton_Click" Margin="5" Visibility="Collapsed"/>
+            </StackPanel>
+
+            <!-- Oznaka za prikaz najboljeg rezultata -->
+            <Label x:Name="highScoreLabel" Content="High Score: " HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10" FontSize="16" FontWeight="Bold"/>
+        </StackPanel>
+    </Grid>
+</Window>
